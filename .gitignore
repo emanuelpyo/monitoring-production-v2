@@ -1,0 +1,23 @@
+# Environment / secrets
+.env
+.env.local
+barcode-monitor/.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Node / frontend
+node_modules/
+dist/
+.vite/
+npm-debug.log*
+*.tsbuildinfo
+
+# OS / editor
+.DS_Store
+*.log
