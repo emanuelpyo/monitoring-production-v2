@@ -236,9 +236,5 @@ class EventGenerator:
             "is_simulated": True,
         }
 
-    def note_control_change(self) -> None:
-        """Called after a control action so connected clients refresh state."""
-        self._last_error = None
-
 
 generator = EventGenerator()

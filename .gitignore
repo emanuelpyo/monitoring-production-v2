@@ -21,3 +21,7 @@ npm-debug.log*
 # OS / editor
 .DS_Store
 *.log
+
+# Local git backup directories (never commit these)
+.git-backup*/
+

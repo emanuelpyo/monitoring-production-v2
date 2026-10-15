@@ -21,7 +21,6 @@ from .auth import (
     create_token,
     current_user,
     require_control_role,
-    user_from_header,
     verify_token,
 )
 from .config import settings

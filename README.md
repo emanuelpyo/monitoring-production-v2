@@ -286,33 +286,36 @@ Event shape (stored in `barcode_events`):
 ## Project layout
 
 ```
-barcode-monitor/
-├── backend/
-│   ├── app/
-│   │   ├── config.py      env-driven settings
-│   │   ├── models.py      Pydantic contracts
-│   │   ├── auth.py        HMAC bearer tokens
-│   │   ├── db.py          schema + queries + aggregation
-│   │   ├── seed.py        24h deterministic seeding
-│   │   ├── generator.py   asyncio event generator
-│   │   └── main.py        app, REST API, WebSocket
-│   ├── tests/test_core.py
-│   └── requirements.txt
-├── frontend/
-│   ├── index.html
-│   ├── src/{main.tsx, api.ts, types.ts, i18n.ts, styles.css}
-│   └── package.json
-├── scripts/
-│   ├── init_db.sh         idempotent DB setup
-│   └── smoke_test.py
-└── README.md
+factorypulse/                # repository root
+├── .env.example             # environment template (copy to barcode-monitor/.env)
+├── .gitignore
+├── README.md
+└── barcode-monitor/         # the application
+    ├── backend/
+    │   ├── app/
+    │   │   ├── config.py      env-driven settings
+    │   │   ├── models.py      Pydantic contracts
+    │   │   ├── auth.py        HMAC bearer tokens
+    │   │   ├── db.py          schema + queries + aggregation
+    │   │   ├── seed.py        24h deterministic seeding
+    │   │   ├── generator.py   asyncio event generator
+    │   │   └── main.py        app, REST API, WebSocket
+    │   ├── tests/test_core.py
+    │   └── requirements.txt
+    ├── frontend/
+    │   ├── index.html
+    │   ├── src/{main.tsx, api.ts, types.ts, i18n.ts, styles.css}
+    │   └── package.json
+    └── scripts/
+        ├── init_db.sh         idempotent DB setup
+        └── smoke_test.py
 ```
 
 ---
 
 ## Configuration (environment variables)
 
-See `../.env.example`. Key values: `DATABASE_URL`, `AUTH_SECRET`,
+See `.env.example` in the repository root. Key values: `DATABASE_URL`, `AUTH_SECRET`,
 `GENERATOR_ENABLED`, `GENERATOR_INTERVAL_MS`, `GENERATOR_SUCCESS_RATE`,
 `SCANNER_COUNT`, `SEED_HOURS`, `SEED_EVENTS_PER_HOUR`, `DISPLAY_TZ`,
 `CORS_ALLOW_ORIGINS`, `VITE_API_URL`, `VITE_WS_URL`.

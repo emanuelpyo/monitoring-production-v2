@@ -35,6 +35,7 @@ import type {
   ScannerStatus,
   UserInfo,
   WsMessage,
+  WsSnapshotPayload,
 } from "./types";
 import { I18nContext, LANGUAGES, translate, useI18n } from "./i18n";
 import type { I18nContextValue, Lang, TranslationKey } from "./i18n";
@@ -288,8 +289,13 @@ function App() {
         );
         setLastUpdate(new Date().toISOString());
       } else if (message.type === "metrics.updated") {
-        setSummary((prev) => (prev ? { ...prev, ...message.payload } : prev));
-        setLastUpdate(new Date().toISOString());
+        // The generator publishes metrics for a fixed 24h window. Only merge
+        // them when the dashboard is also showing 24h, otherwise they would
+        // overwrite the range-correct KPIs (REST refresh handles other ranges).
+        if (filters.range_hours === 24) {
+          setSummary((prev) => (prev ? { ...prev, ...message.payload } : prev));
+          setLastUpdate(new Date().toISOString());
+        }
       } else if (message.type === "scanner.updated") {
         const { scanner_id, state } = message.payload;
         setScanners((prev) =>
@@ -785,7 +791,7 @@ function toneBg(tone?: "ok" | "fault"): string {
 }
 
 function buildSummaryFromSnapshot(
-  p: { summary: MonitoringSummary | any; scanners: ScannerStatus[]; generator: GeneratorStatus },
+  p: WsSnapshotPayload,
   prev: MonitoringSummary | null,
   rangeHours: number,
 ): MonitoringSummary {
